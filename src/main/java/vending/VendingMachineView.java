@@ -29,15 +29,23 @@ class VendingMachineView extends JPanel {
         VendingMachineController controller = new VendingMachineController(model, this);
         JPanel drinkPanel = createDrinkPanel(controller);
         JPanel moneyPanel = createMoneyPanel(controller);
+        JButton cancel = createCancelButton(model);
 
         container.add(label);
         container.add(drinkPanel);
         container.add(moneyPanel);
+        container.add(cancel);
 
         frame.setSize(new Dimension(900, 600));
         frame.add(container);
         frame.setVisible(true);
 
+    }
+
+    private JButton createCancelButton(VendingMachineModel model) {
+        JButton cancel = new JButton("Cancel");
+        cancel.addActionListener(new VendingMachineController(model, this));
+        return cancel;
     }
 
     private JLabel createWelcomeLabel() {

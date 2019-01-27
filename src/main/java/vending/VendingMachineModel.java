@@ -52,6 +52,12 @@ class VendingMachineModel {
         System.out.println(String.format("Giving back change: %d krones", currentBalance));
     }
 
+    void cancel() {
+        state = State.CANCEL;
+        System.out.println(String.format("Cancelling current transaction. Giving back change: %d krones", currentBalance));
+        reset();
+    }
+
     void reset() {
         currentBalance = 0;
         selectedBeverage = Beverage.NOT_SELECTED;

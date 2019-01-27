@@ -17,6 +17,12 @@ public class VendingMachineController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
 
+        if ("Cancel".equals(actionCommand)) {
+            model.cancel();
+            resetVendingMachine();
+            return;
+        }
+
         Beverage beverage = getBeverageType(actionCommand);
         if (beverage != Beverage.NOT_SELECTED) {
             model.setSelectedBeverage(beverage);
@@ -33,12 +39,12 @@ public class VendingMachineController implements ActionListener {
 
         if (model.getState() == State.PURCHASE_COMPLETE) {
             model.calculateBalanceAfterPurchase();
+            model.reset();
             resetVendingMachine();
         }
     }
 
     private void resetVendingMachine() {
-        model.reset();
         view.setBalanceField(String.valueOf(model.getCurrentBalance()));
         view.setPriceField(String.valueOf(model.getSelectedBeverage().getPrice()));
     }
