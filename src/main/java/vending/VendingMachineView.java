@@ -13,8 +13,11 @@ import javax.swing.WindowConstants;
 class VendingMachineView extends JPanel {
 
     private final JFrame frame = new JFrame("Vending machine");
+    private final JTextField priceField = new JTextField("0");
+    private final JTextField balanceField = new JTextField("0");
 
-    VendingMachineView() {
+
+    void createView() {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         JPanel container = new JPanel();
@@ -23,7 +26,7 @@ class VendingMachineView extends JPanel {
         JLabel label = createWelcomeLabel();
 
         VendingMachineModel model = new VendingMachineModel();
-        VendingMachineController controller = new VendingMachineController(model);
+        VendingMachineController controller = new VendingMachineController(model, this);
         JPanel drinkPanel = createDrinkPanel(controller);
         JPanel moneyPanel = createMoneyPanel(controller);
 
@@ -57,7 +60,6 @@ class VendingMachineView extends JPanel {
 
         JLabel priceLabel = new JLabel("Price in NOK");
 
-        JTextField priceField = new JTextField("0");
         priceField.setColumns(3);
 
         panel.add(water);
@@ -83,7 +85,6 @@ class VendingMachineView extends JPanel {
 
 
         JLabel balanceLabel = new JLabel("Current balance in NOK");
-        JTextField balanceField = new JTextField("0");
         balanceField.setColumns(3);
 
         panel.add(oneKrone);
@@ -94,5 +95,13 @@ class VendingMachineView extends JPanel {
         panel.add(balanceField);
 
         return panel;
+    }
+
+    void setPriceField(String price) {
+        this.priceField.setText(price);
+    }
+
+    void setBalanceField(String balance) {
+        this.balanceField.setText(balance);
     }
 }
