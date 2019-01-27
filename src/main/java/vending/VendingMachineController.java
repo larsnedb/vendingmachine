@@ -23,6 +23,10 @@ public class VendingMachineController implements ActionListener {
             return;
         }
 
+        if (model.getState() != State.ONGOING_TRANSACTION) {
+            model.setState(State.ONGOING_TRANSACTION);
+        }
+
         Beverage beverage = getBeverageType(actionCommand);
         if (beverage != Beverage.NOT_SELECTED) {
             model.setSelectedBeverage(beverage);
@@ -39,6 +43,7 @@ public class VendingMachineController implements ActionListener {
 
         if (model.getState() == State.PURCHASE_COMPLETE) {
             model.calculateBalanceAfterPurchase();
+            model.setState(State.RESET);
             model.reset();
             resetVendingMachine();
         }
