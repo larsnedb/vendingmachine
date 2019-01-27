@@ -20,14 +20,14 @@ class VendingMachineView extends JPanel {
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
-        JLabel label = new JLabel("Welcome! Please choose your drink");
-        label.setBounds(300, 20, 300, 30);
-        label.setVisible(true);
+        JLabel label = createWelcomeLabel();
+
+        VendingMachineModel model = new VendingMachineModel();
+        VendingMachineController controller = new VendingMachineController(model);
+        JPanel drinkPanel = createDrinkPanel(controller);
+        JPanel moneyPanel = createMoneyPanel(controller);
 
         container.add(label);
-
-        JPanel drinkPanel = createDrinkPanel();
-        JPanel moneyPanel = createMoneyPanel();
         container.add(drinkPanel);
         container.add(moneyPanel);
 
@@ -37,12 +37,23 @@ class VendingMachineView extends JPanel {
 
     }
 
-    private JPanel createDrinkPanel() {
+    private JLabel createWelcomeLabel() {
+        JLabel label = new JLabel("Welcome! Please choose your drink");
+        label.setBounds(300, 20, 300, 30);
+        label.setVisible(true);
+        return label;
+    }
+
+    private JPanel createDrinkPanel(VendingMachineController controller) {
         JPanel panel = new JPanel();
 
         JButton water = new JButton("Water");
         JButton soda = new JButton("Soda");
         JButton beer = new JButton("Beer");
+
+        water.addActionListener(controller);
+        soda.addActionListener(controller);
+        beer.addActionListener(controller);
 
         JLabel priceLabel = new JLabel("Price in NOK");
 
@@ -57,7 +68,7 @@ class VendingMachineView extends JPanel {
         return panel;
     }
 
-    private JPanel createMoneyPanel() {
+    private JPanel createMoneyPanel(VendingMachineController controller) {
         JPanel panel = new JPanel();
 
         JButton oneKrone = new JButton("1");
@@ -65,8 +76,13 @@ class VendingMachineView extends JPanel {
         JButton tenKroner = new JButton("10");
         JButton twentyKroner = new JButton("20");
 
-        JLabel balanceLabel = new JLabel("Current balance in NOK");
+        oneKrone.addActionListener(controller);
+        fiveKroner.addActionListener(controller);
+        tenKroner.addActionListener(controller);
+        twentyKroner.addActionListener(controller);
 
+
+        JLabel balanceLabel = new JLabel("Current balance in NOK");
         JTextField balanceField = new JTextField("0");
         balanceField.setColumns(3);
 
