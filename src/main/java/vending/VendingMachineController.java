@@ -31,7 +31,16 @@ public class VendingMachineController implements ActionListener {
             model.updateStateIfTransactionComplete();
         }
 
-        System.out.println(actionCommand);
+        if (model.getState() == State.PURCHASE_COMPLETE) {
+            model.calculateBalanceAfterPurchase();
+            resetVendingMachine();
+        }
+    }
+
+    private void resetVendingMachine() {
+        model.reset();
+        view.setBalanceField(String.valueOf(model.getCurrentBalance()));
+        view.setPriceField(String.valueOf(model.getSelectedBeverage().getPrice()));
     }
 
     private Beverage getBeverageType(String command) {

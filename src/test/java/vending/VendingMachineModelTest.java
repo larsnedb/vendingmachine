@@ -1,6 +1,6 @@
 package vending;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
@@ -38,5 +38,29 @@ public class VendingMachineModelTest {
         model.updateStateIfTransactionComplete();
 
         assertSame(State.PURCHASE_COMPLETE, model.getState());
+    }
+
+    @Test
+    public void should_calculate_balance_after_complete_purchase() {
+        model.setState(State.PURCHASE_COMPLETE);
+        model.setCurrentBalance(50);
+        model.setSelectedBeverage(Beverage.BEER);
+
+        model.calculateBalanceAfterPurchase();
+
+        assertSame(5, model.getCurrentBalance());
+    }
+
+    @Test
+    public void should_reset_machine_after_complete_purhcase() {
+        model.setState(State.PURCHASE_COMPLETE);
+        model.setCurrentBalance(50);
+        model.setSelectedBeverage(Beverage.BEER);
+
+        model.reset();
+
+        assertSame(State.IDLE, model.getState());
+        assertSame(0, model.getCurrentBalance());
+        assertSame(Beverage.NOT_SELECTED, model.getSelectedBeverage());
     }
 }

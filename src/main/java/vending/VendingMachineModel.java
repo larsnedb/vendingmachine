@@ -20,7 +20,7 @@ class VendingMachineModel {
         this.state = state;
     }
 
-    public Beverage getSelectedBeverage() {
+    Beverage getSelectedBeverage() {
         return selectedBeverage;
     }
 
@@ -43,7 +43,19 @@ class VendingMachineModel {
     void updateStateIfTransactionComplete() {
         if (selectedBeverage != Beverage.NOT_SELECTED && currentBalance >= selectedBeverage.getPrice()) {
             state = State.PURCHASE_COMPLETE;
-            System.out.println("Transaction is complete");
+            System.out.println(String.format("Transaction is complete. Bought %s for %d krones", selectedBeverage, selectedBeverage.getPrice()));
         }
+    }
+
+    void calculateBalanceAfterPurchase() {
+        currentBalance -= selectedBeverage.getPrice();
+        System.out.println(String.format("Giving back change: %d krones", currentBalance));
+    }
+
+    void reset() {
+        currentBalance = 0;
+        selectedBeverage = Beverage.NOT_SELECTED;
+        state = State.IDLE;
+        System.out.println("Vending machine is now ready for new purchase\n");
     }
 }
