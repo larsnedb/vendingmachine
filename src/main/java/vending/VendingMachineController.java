@@ -21,12 +21,14 @@ public class VendingMachineController implements ActionListener {
         if (beverage != Beverage.NOT_SELECTED) {
             model.setSelectedBeverage(beverage);
             view.setPriceField(String.valueOf(beverage.getPrice()));
+            model.updateStateIfTransactionComplete();
         }
 
         int krones = getKrones(actionCommand);
         if (krones != 0) {
             model.addToBalance(krones);
             view.setBalanceField(String.valueOf(model.getCurrentBalance()));
+            model.updateStateIfTransactionComplete();
         }
 
         System.out.println(actionCommand);

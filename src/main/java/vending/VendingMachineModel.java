@@ -12,11 +12,11 @@ class VendingMachineModel {
         this.currentBalance = 0;
     }
 
-    public State getState() {
+    State getState() {
         return state;
     }
 
-    public void setState(State state) {
+    void setState(State state) {
         this.state = state;
     }
 
@@ -32,11 +32,18 @@ class VendingMachineModel {
         return currentBalance;
     }
 
-    public void setCurrentBalance(int currentBalance) {
+    void setCurrentBalance(int currentBalance) {
         this.currentBalance = currentBalance;
     }
 
     void addToBalance(int amount) {
         this.currentBalance += amount;
+    }
+
+    void updateStateIfTransactionComplete() {
+        if (selectedBeverage != Beverage.NOT_SELECTED && currentBalance >= selectedBeverage.getPrice()) {
+            state = State.PURCHASE_COMPLETE;
+            System.out.println("Transaction is complete");
+        }
     }
 }
